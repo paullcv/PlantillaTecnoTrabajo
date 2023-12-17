@@ -1,57 +1,71 @@
 @extends('layouts.form')
 
 @section('content')
-<main class="main-content  mt-0">
-    <section>
-      <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
-              <div class="card card-plain">
-                <div class="card-header">
-                  <h4 class="font-weight-bolder">Sign Up</h4>
-                  <p class="mb-0">Enter your email and password to register</p>
+<div class="container my-auto">
+    <div class="row">
+        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg py-3 pe-1">
+                        <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Registrarse</h4>
+                    </div>
                 </div>
                 <div class="card-body">
-                  <form role="form">
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Name</label>
-                      <input type="text" class="form-control">
-                    </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Password</label>
-                      <input type="password" class="form-control">
-                    </div>
-                    <div class="form-check form-check-info text-start ps-0">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                      <label class="form-check-label" for="flexCheckDefault">
-                        I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                      </label>
-                    </div>
-                    <div class="text-center">
-                      <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
-                    </div>
-                  </form>
+
+                    @if ($errors->any())
+                        <div class="text-center text-muted mb-2">
+                            <h4>Se encontro el siguiente error.</h4>
+                        </div>
+                        <div class="alert alert-primary alert-dismissible text-white" role="alert">
+                            <span class="text-sm"> {{ $errors->first() }} </span>
+                            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                    @else
+                        <div class="text-center text-muted mb-4">
+                            <small>Ingresa tus datos para registrarte al sistema</small>
+                        </div>
+                    @endif
+
+                    <form form method="POST" action="{{ route('register') }}" role="form" class="text-start">
+                        @csrf
+
+                        {{-- Nombre --}}
+                        <div class="input-group input-group-outline my-3">
+                            {{-- <label class="form-label">Nombre</label> --}}
+                            <input type="text" placeholder="Nombre" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus >
+                        </div>
+
+                        {{-- Correo Electronico --}}
+                        <div class="input-group input-group-outline my-3">
+                            {{-- <label class="form-label">Email</label> --}}
+                            <input type="email" placeholder="Correo Electronico" class="form-control"name="email" value="{{ old('email') }}" required autocomplete="email" >
+                        </div>
+
+                        {{-- Contraseña --}}
+                        <div class="input-group input-group-outline mb-3">
+                            {{-- <label class="form-label">Password</label> --}}
+                            <input type="password" placeholder="Contraseña" class="form-control" name="password" required autocomplete="new-password">
+                        </div>
+                        {{-- Confirmar Contraseña --}}
+                        <div class="input-group input-group-outline mb-3">
+                            {{-- <label class="form-label">Password</label> --}}
+                            <input type="password" placeholder="Repertir Contraseña" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Registrarse</button>
+                        </div>
+                        <p class="mt-4 text-sm text-center">
+                            Ya tienes una cuenta?
+                            <a href="{{ route('login') }}"
+                                class="text-primary text-gradient font-weight-bold">Inicia sesión</a>
+                        </p>
+                    </form>
                 </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-2 text-sm mx-auto">
-                    Already have an account?
-                    <a href="../pages/sign-in.html" class="text-primary text-gradient font-weight-bold">Sign in</a>
-                  </p>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
-  </main>
+    </div>
+</div>
 @endsection
